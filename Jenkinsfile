@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/shindeshravani-shr/Collage-admission-project.git'
+                git branch: 'main', url: 'https://github.com/shindeshravani-shr/Collage-admission-project.git'
             }
         }
 
