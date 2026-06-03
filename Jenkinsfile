@@ -9,7 +9,7 @@ stage('Clone') {
 steps {
 
 git branch: 'main',
-url: 'https://github.com/YOUR_USERNAME/College-Admission-System.git'
+url: 'https://github.com/shindeshravani-shr/Collage-admission-project.git'
 
 }
 
