@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Admission Management System</title>
+</head>
+
+<body>
+
+<h1>College Admission Management System</h1>
+
+<p>
+Welcome to our College Admission Portal.
+Students can apply online for admission in various courses.
+This system helps students submit applications quickly and easily.
+</p>
+
+<h2>Available Courses</h2>
+
+<ul>
+  <li>BCA - Bachelor of Computer Applications</li>
+  <li>BSc Computer Science</li>
+  <li>BBA - Bachelor of Business Administration</li>
+  <li>BCom - Bachelor of Commerce</li>
+  <li>BTech - Bachelor of Technology</li>
+</ul>
+
+<h2>Admission Form</h2>
+
+<form id="admissionForm">
+
+<input type="text" id="name" placeholder="Full Name" required>
+
+<input type="email" id="email" placeholder="Email Address" required>
+
+<input type="text" id="course" placeholder="Course Name" required>
+
+<button type="submit">Apply Now</button>
+
+</form>
+
+<h2>Why Choose Our College?</h2>
+
+<ul>
+  <li>Experienced Faculty</li>
+  <li>Modern Computer Labs</li>
+  <li>Placement Assistance</li>
+  <li>Industry-Oriented Curriculum</li>
+</ul>
+
+<h2>Contact Information</h2>
+
+<p>Email: admission@college.com</p>
+<p>Phone: +91 9876543210</p>
+<p>Address: Pune, Maharashtra</p>
+
+<script>
+
+document.getElementById("admissionForm")
+.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const data = {
+
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        course: document.getElementById("course").value
+
+    };
+
+    await fetch("http://localhost:5000/admission", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(data)
+
+    });
+
+    alert("Admission Submitted Successfully");
+
+});
+
+</script>
+
+</body>
+</html>
