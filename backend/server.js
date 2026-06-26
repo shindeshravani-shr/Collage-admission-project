@@ -1,38 +1,57 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const db = require("./db");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// 👉 serve frontend
+// Serve frontend
 app.use(express.static(path.join(__dirname, "../frontend")));
 
-let students = [];
-
-// root page
+// Root page
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// admission API
+// Admission API
 app.post("/admission", (req, res) => {
-    const student = {
-        name: req.body.name,
-        email: req.body.email,
-        course: req.body.course
-    };
 
-    students.push(student);
+    const { name, email, course } = req.body;
 
-    res.send("Admission Submitted Successfully");
+    const sql = "INSERT INTO students (name, email, course) VALUES (?, ?, ?)";
+
+    db.query(sql, [name, email, course], (err, result) => {
+
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database Error");
+        }
+
+        res.send("Admission Submitted Successfully");
+
+    });
+
 });
 
-// students list API
+// Get all students
 app.get("/students", (req, res) => {
-    res.json(students);
+
+    const sql = "SELECT * FROM students";
+
+    db.query(sql, (err, result) => {
+
+        if (err) {
+            console.error(err);
+            return res.status(500).send("Database Error");
+        }
+
+        res.json(result);
+
+    });
+
 });
 
 app.listen(5000, () => {

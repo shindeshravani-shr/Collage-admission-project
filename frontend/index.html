@@ -55,32 +55,38 @@ This system helps students submit applications quickly and easily.
 
 <script>
 
-document.getElementById("admissionForm")
-.addEventListener("submit", async function(e){
+document.getElementById("admissionForm").addEventListener("submit", async function(e){
 
     e.preventDefault();
 
     const data = {
-
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
         course: document.getElementById("course").value
-
     };
 
-    await fetch("http://localhost:5000/admission", {
+    try {
 
-        method: "POST",
+        const response = await fetch("/admission", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
 
-        headers: {
-            "Content-Type": "application/json"
-        },
+        const message = await response.text();
 
-        body: JSON.stringify(data)
+        alert(message);
 
-    });
+        document.getElementById("admissionForm").reset();
 
-    alert("Admission Submitted Successfully");
+    } catch (error) {
+
+        console.error(error);
+        alert("Failed to submit admission form.");
+
+    }
 
 });
 
