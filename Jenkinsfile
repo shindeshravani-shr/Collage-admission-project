@@ -15,7 +15,9 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/shindeshravani-shr/Collage-admission-project.git'
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/shindeshravani-shr/Collage-admission-project.git'
             }
         }
 
@@ -50,15 +52,14 @@ pipeline {
                 '''
             }
         }
-
     }
 
     post {
         success {
-            echo "✅ Deployment Successful"
+            echo "✅ Build & Deploy Successful"
         }
         failure {
-            echo "❌ Build Failed - check logs"
+            echo "❌ Build Failed - Check Logs"
         }
     }
 }
