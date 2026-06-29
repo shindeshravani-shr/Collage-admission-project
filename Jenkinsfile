@@ -40,7 +40,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                 docker build --memory=512m --no-cache -t college-app .
+                docker build --memory=512m --no-cache -t $IMAGE_NAME .
                 '''
             }
         }
@@ -48,7 +48,14 @@ pipeline {
         stage('Run Container') {
             steps {
                 sh '''
-                docker run -d -p 5000:5000 --name $CONTAINER_NAME $IMAGE_NAME
+                docker run -d \
+                -p 5000:5000 \
+                --name $CONTAINER_NAME \
+                -e DB_HOST=college-db.co7yois848m6.us-east-1.rds.amazonaws.com \
+                -e DB_USER=admin \
+                -e DB_PASSWORD=College-db \
+                -e DB_NAME=college_admission \
+                $IMAGE_NAME
                 '''
             }
         }
