@@ -40,7 +40,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build --memory=1g -t $IMAGE_NAME .
+                 docker build --memory=512m --no-cache -t college-app .
                 '''
             }
         }
